@@ -1,23 +1,33 @@
-import { Application, Sprite, BitmapText } from "pixi.js";
+import { Application, Sprite, BitmapText, Ticker } from "pixi.js";
 
 export class Player {
 
     // @ts-ignore
     private speed: number;
     // @ts-ignore
-    public sprite: Sprite;
+    private sprite: Sprite;
     // @ts-ignore
-    private delta: number;
+    //private delta: number;
 
     public player_text: BitmapText;
 
+    private velocity_x: number;
+    private velocity_y: number;
+
+    public name: string;
+
     constructor(app: Application) {
+        this.name = "John";
+
         this.speed = 10.0;
 
         this.sprite = Sprite.from("assets/knowledge_graph_logo.png");
         app.stage.addChild(this.sprite);
         this.sprite.x = 200;
         this.sprite.y = 200;
+
+        this.velocity_x = 0;
+        this.velocity_y = 0;
 
         //document.addEventListener('keydown', this.logKey);
 
@@ -35,13 +45,17 @@ export class Player {
         // No pixi here, All HTML DOM baby!
         document.addEventListener("keydown", this.onKeyDown.bind(this));
         document.addEventListener("keyup", this.onKeyUp.bind(this));
+
+        // Set up the ticker/update function
+        Ticker.shared.add(this.update, this);
     }
 
 
-    public update_player(delta: number) {
+    public update(delta: number) {
         // There's probably a better way to do thi
-        this.delta = delta;
-        //this.player_text.text = "Pog?";
+        
+        this.sprite.x += this.velocity_x * delta;
+        this.sprite.y += this.velocity_y * delta;
     }
 
     private onKeyDown(e: KeyboardEvent): void {
@@ -52,24 +66,29 @@ export class Player {
         // e.key // if you care about the character that the key represents
         if (e.code == "KeyW")
         {
-            this.sprite.y -= this.speed * this.delta;
+            this.velocity_y = -this.speed;
         }
         if (e.code == "KeyS")
         {
-            this.sprite.y += this.speed * this.delta;
+            this.velocity_y = this.speed;
         }
         if (e.code == "KeyA")
         {
-            this.sprite.x -= this.speed * this.delta;
+            this.velocity_x = -this.speed;
         }
         if (e.code == "KeyD")
         {
-            this.sprite.x += this.speed * this.delta;
+            this.velocity_x = this.speed;
         }
     }
 
     private onKeyUp(e: KeyboardEvent): void {
         this.player_text.text = "KeyUp event fired! " + e.code;
+
+        // right now, we'll just set all of the velocities to zero once you lift up the button
+        // this is really jank and doesn't feel good tho
+        this.velocity_x = 0;
+        this.velocity_y = 0;
 
         // Most likely, you will switch on this:
         // e.code // if you care about the physical location of the key

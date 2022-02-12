@@ -77,6 +77,6 @@ let player : Player = new Player(app);
 let elapsed = 0.0;
 app.ticker.add((delta: number) => {
   elapsed += delta;
-  bitmapTexty.text = elapsed.toString();
-  player.update_player(delta);
+  bitmapTexty.text = player.name + " " + elapsed.toString();
+  //player.update_player(delta);
 });
