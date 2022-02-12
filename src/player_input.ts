@@ -5,7 +5,7 @@ export class Player {
     // @ts-ignore
     private speed: number;
     // @ts-ignore
-    private sprite: Sprite;
+    public sprite: Sprite;
     // @ts-ignore
     private delta: number;
 
@@ -15,9 +15,9 @@ export class Player {
         this.speed = 10.0;
 
         this.sprite = Sprite.from("assets\knowledge_graph_logo.png");
-        this.sprite.x = 100;
-        this.sprite.y = 100;
         app.stage.addChild(this.sprite);
+        this.sprite.x = 200;
+        this.sprite.y = 200;
 
         //document.addEventListener('keydown', this.logKey);
 

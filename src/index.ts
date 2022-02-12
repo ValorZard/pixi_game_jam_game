@@ -71,6 +71,7 @@ let player : Player = new Player(app);
 //app.stage.addChild(player.player_text);
 //player.player_text.x =  app.screen.width / 2;
 //player.player_text.y = app.screen.height / 2;
+//app.stage.addChild(player.sprite);
 
 // Add a ticker callback to move the sprite back and forth
 let elapsed = 0.0;
