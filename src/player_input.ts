@@ -14,7 +14,7 @@ export class Player {
     constructor(app: Application) {
         this.speed = 10.0;
 
-        this.sprite = Sprite.from("assets\knowledge_graph_logo.png");
+        this.sprite = Sprite.from("assets/knowledge_graph_logo.png");
         app.stage.addChild(this.sprite);
         this.sprite.x = 200;
         this.sprite.y = 200;
@@ -45,15 +45,31 @@ export class Player {
     }
 
     private onKeyDown(e: KeyboardEvent): void {
-        this.player_text.text = "KeyDown event fired! " + e.code.toString();
+        this.player_text.text = "KeyDown event fired! " + e.code;
 
         // Most likely, you will switch on this:
         // e.code // if you care about the physical location of the key
         // e.key // if you care about the character that the key represents
+        if (e.code == "KeyW")
+        {
+            this.sprite.y -= this.speed * this.delta;
+        }
+        if (e.code == "KeyS")
+        {
+            this.sprite.y += this.speed * this.delta;
+        }
+        if (e.code == "KeyA")
+        {
+            this.sprite.x -= this.speed * this.delta;
+        }
+        if (e.code == "KeyD")
+        {
+            this.sprite.x += this.speed * this.delta;
+        }
     }
 
     private onKeyUp(e: KeyboardEvent): void {
-        this.player_text.text = "KeyUp event fired! " + e.code.toString();
+        this.player_text.text = "KeyUp event fired! " + e.code;
 
         // Most likely, you will switch on this:
         // e.code // if you care about the physical location of the key
