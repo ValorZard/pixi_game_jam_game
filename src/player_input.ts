@@ -14,11 +14,11 @@ export class Player {
     constructor(app: Application) {
         this.speed = 10.0;
 
-        this.sprite = Sprite.from("assest\pencil.jpg");
+        this.sprite = Sprite.from("assets\knowledge_graph_logo.png");
         this.sprite.x = 100;
         this.sprite.y = 100;
         app.stage.addChild(this.sprite);
-        
+
         //document.addEventListener('keydown', this.logKey);
 
         this.player_text = new BitmapText("I love baking, my family, and my friends",
