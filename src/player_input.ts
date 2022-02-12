@@ -87,8 +87,8 @@ export class Player {
 
         // right now, we'll just set all of the velocities to zero once you lift up the button
         // this is really jank and doesn't feel good tho
-        this.velocity_x = 0;
-        this.velocity_y = 0;
+        //this.velocity_x = 0;
+        //this.velocity_y = 0;
 
         // Most likely, you will switch on this:
         // e.code // if you care about the physical location of the key
