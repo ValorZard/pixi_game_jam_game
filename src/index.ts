@@ -1,6 +1,6 @@
 import { Application, Sprite, Container, Graphics, Text, TextStyle, BitmapFont, BitmapText} from 'pixi.js'
 import { Player } from './player_input';
-import {LoaderScene} from "./loader_scene";
+//import {LoaderScene} from "./loader_scene";
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -35,9 +35,9 @@ app.stage.addChild(conty);
 //Loader.shared.load();
 
 // @ts-ignore
-let loaderScene = new LoaderScene(app.screen.width, app.screen.height);
+//let loaderScene = new LoaderScene(app.screen.width, app.screen.height);
 
-const clampy: Sprite = Sprite.from("Clampy");
+const clampy: Sprite = Sprite.from("assets/clampy.png");
 //const clampy: Sprite = Sprite.from("https://i.imgur.com/Vsjn557.jpeg");
 clampy.anchor.set(0.5);
 

@@ -77,26 +77,31 @@ export class Player {
         this.position_x += this.velocity_x * delta;
         this.position_y += this.velocity_y * delta;
 
-        /*
+        
+        
         switch(this.direction) { 
             case Direction.Up: { 
                //statements; 
-               this.sprite = Sprite.from("assets/idle/idle_up.png");
+               this.player_text.text = "Current Direction: UP";
+               //this.sprite = Sprite.from("assets/idle/idle_up.png");
                break; 
             } 
             case Direction.Down: { 
                //statements; 
-               this.sprite = Sprite.from("assets/idle/idle_down.png");
+               this.player_text.text = "Current Direction: Down";
+               //this.sprite = Sprite.from("assets/idle/idle_down.png");
                break; 
             }
             case Direction.Left: { 
                 //statements; 
-                this.sprite = Sprite.from("assets/idle/idle_left.png");
+                this.player_text.text = "Current Direction: Left";
+                //this.sprite = Sprite.from("assets/idle/idle_left.png");
                 break; 
             }
             case Direction.Right: { 
                 //statements; 
-                this.sprite = Sprite.from("assets/idle/idle_right.png");
+                this.player_text.text = "Current Direction: Right";
+                //this.sprite = Sprite.from("assets/idle/idle_right.png");
                 break; 
             }
             default: { 
@@ -104,14 +109,14 @@ export class Player {
                break; 
             } 
          } 
-         */
+         
+         
         // after makign sure we got correct sprite, then set position of sprite to player position
         this.sprite.x = this.position_x;
         this.sprite.y = this.position_y;
 
-        this.player_text.text = "\n Current Position: " + this.position_x.toString() + ", " + this.position_y.toString();
+        this.player_text.text += "\n Current Position: " + this.position_x.toString() + ", " + this.position_y.toString();
         this.player_text.text += "\n Current Sprite Position: " + this.sprite.x.toString() + ", " + this.sprite.y.toString();
-        this.player_text.text += "\n Current Direction: " + this.direction;
     }
 
     private onKeyDown(e: KeyboardEvent): void {
@@ -124,6 +129,7 @@ export class Player {
         {
             this.direction = Direction.Up;
             this.velocity_y = -this.speed;
+            //this.sprite = Sprite.from("assets/idle/idle_up.png");
         }
         if (e.code == "KeyS")
         {
