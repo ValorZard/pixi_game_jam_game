@@ -1,4 +1,5 @@
 import { Application, Sprite, Container, Graphics, Text, TextStyle, BitmapFont, BitmapText} from 'pixi.js'
+//import * as PIXI from 'pixi.js';
 import { Player } from './player_input';
 import { Obstacle } from './obstacle';
 //import { Layer } from '@pixi/layers';
@@ -11,11 +12,6 @@ const app = new Application({
 	width: 1920,
 	height: 1080
 });
-
-//app.stage = new display.Stage();
-// PixiJS v5 sorting - works on zIndex - and layer gets its zIndex from a group!
-//app.stage.sortableChildren = true;
-
 
 const graphics: Graphics = new Graphics();
 graphics.beginFill(0xFF00FF);
