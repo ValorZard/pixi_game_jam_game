@@ -1,4 +1,11 @@
-import { Application, Sprite, BitmapText, Ticker } from "pixi.js";
+import { Application, Sprite, BitmapText, Ticker} from "pixi.js";
+
+enum Direction {
+    Up = 1,
+    Down,
+    Left,
+    Right,
+  }
 
 export class Player {
 
@@ -11,20 +18,32 @@ export class Player {
 
     public player_text: BitmapText;
 
+    private position_x: number;
+    private position_y: number;
+
     private velocity_x: number;
     private velocity_y: number;
 
     public name: string;
+
+    private direction: Direction;
 
     constructor(app: Application) {
         this.name = "John";
 
         this.speed = 10.0;
 
-        this.sprite = Sprite.from("assets/knowledge_graph_logo.png");
+        // set direction as down
+        this.direction = Direction.Down;
+        this.sprite = Sprite.from("assets/idle/idle_down.png");
+
         app.stage.addChild(this.sprite);
-        this.sprite.x = 200;
-        this.sprite.y = 200;
+
+        this.position_x = 200;
+        this.position_y = 200;
+
+        this.sprite.x = this.position_x;
+        this.sprite.y = this.position_y;
 
         this.velocity_x = 0;
         this.velocity_y = 0;
@@ -54,30 +73,71 @@ export class Player {
     public update(delta: number) {
         // There's probably a better way to do thi
         
-        this.sprite.x += this.velocity_x * delta;
-        this.sprite.y += this.velocity_y * delta;
+        // set position to change in velocity or whatever
+        this.position_x += this.velocity_x * delta;
+        this.position_y += this.velocity_y * delta;
+
+        /*
+        switch(this.direction) { 
+            case Direction.Up: { 
+               //statements; 
+               this.sprite = Sprite.from("assets/idle/idle_up.png");
+               break; 
+            } 
+            case Direction.Down: { 
+               //statements; 
+               this.sprite = Sprite.from("assets/idle/idle_down.png");
+               break; 
+            }
+            case Direction.Left: { 
+                //statements; 
+                this.sprite = Sprite.from("assets/idle/idle_left.png");
+                break; 
+            }
+            case Direction.Right: { 
+                //statements; 
+                this.sprite = Sprite.from("assets/idle/idle_right.png");
+                break; 
+            }
+            default: { 
+               //statements; 
+               break; 
+            } 
+         } 
+         */
+        // after makign sure we got correct sprite, then set position of sprite to player position
+        this.sprite.x = this.position_x;
+        this.sprite.y = this.position_y;
+
+        this.player_text.text = "\n Current Position: " + this.position_x.toString() + ", " + this.position_y.toString();
+        this.player_text.text += "\n Current Sprite Position: " + this.sprite.x.toString() + ", " + this.sprite.y.toString();
+        this.player_text.text += "\n Current Direction: " + this.direction;
     }
 
     private onKeyDown(e: KeyboardEvent): void {
-        this.player_text.text = "KeyDown event fired! " + e.code;
+        //this.player_text.text = "KeyDown event fired! " + e.code;
 
         // Most likely, you will switch on this:
         // e.code // if you care about the physical location of the key
         // e.key // if you care about the character that the key represents
         if (e.code == "KeyW")
         {
+            this.direction = Direction.Up;
             this.velocity_y = -this.speed;
         }
         if (e.code == "KeyS")
         {
+            this.direction = Direction.Down;
             this.velocity_y = this.speed;
         }
         if (e.code == "KeyA")
         {
+            this.direction = Direction.Left;
             this.velocity_x = -this.speed;
         }
         if (e.code == "KeyD")
         {
+            this.direction = Direction.Right;
             this.velocity_x = this.speed;
         }
     }

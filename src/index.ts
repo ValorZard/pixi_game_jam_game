@@ -1,5 +1,6 @@
-import { Application, Sprite, Container, Graphics, Text, TextStyle, BitmapFont, BitmapText } from 'pixi.js'
+import { Application, Sprite, Container, Graphics, Text, TextStyle, BitmapFont, BitmapText} from 'pixi.js'
 import { Player } from './player_input';
+import {LoaderScene} from "./loader_scene";
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -27,7 +28,16 @@ conty.y = 0;
 conty.rotation = 0;
 app.stage.addChild(conty);
 
-const clampy: Sprite = Sprite.from("assets/clampy.png");
+// remember the assets manifest we created before? You need to import it here
+//Loader.shared.add(assets);
+
+// this will start the load of the files
+//Loader.shared.load();
+
+// @ts-ignore
+let loaderScene = new LoaderScene(app.screen.width, app.screen.height);
+
+const clampy: Sprite = Sprite.from("Clampy");
 //const clampy: Sprite = Sprite.from("https://i.imgur.com/Vsjn557.jpeg");
 clampy.anchor.set(0.5);
 
