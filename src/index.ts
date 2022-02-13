@@ -1,5 +1,7 @@
-import { Application, Sprite, Container, Graphics, Text, TextStyle, BitmapFont, BitmapText } from 'pixi.js'
+import { Application, Sprite, Container, Graphics, Text, TextStyle, BitmapFont, BitmapText} from 'pixi.js'
 import { Player } from './player_input';
+import { Obstacle } from './obstacle';
+//import { Layer } from '@pixi/layers';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -9,6 +11,11 @@ const app = new Application({
 	width: 1920,
 	height: 1080
 });
+
+//app.stage = new display.Stage();
+// PixiJS v5 sorting - works on zIndex - and layer gets its zIndex from a group!
+//app.stage.sortableChildren = true;
+
 
 const graphics: Graphics = new Graphics();
 graphics.beginFill(0xFF00FF);
@@ -73,10 +80,16 @@ let player : Player = new Player(app);
 //player.player_text.y = app.screen.height / 2;
 //app.stage.addChild(player.sprite);
 
+//let obstacleLayer = new Layer();
+
+//app.stage.addChild(obstacleLayer);
+
 // Add a ticker callback to move the sprite back and forth
 let elapsed = 0.0;
 app.ticker.add((delta: number) => {
   elapsed += delta;
   bitmapTexty.text = player.name + " " + elapsed.toString();
   //player.update_player(delta);
+  // @ts-ignore
+	let obstacle = new Obstacle(app, player);
 });

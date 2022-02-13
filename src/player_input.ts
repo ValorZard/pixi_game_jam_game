@@ -1,30 +1,41 @@
-import { Application, Sprite, BitmapText, Ticker } from "pixi.js";
+import { Application, Sprite, BitmapText, Ticker, DisplayObject} from "pixi.js";
 
 export class Player {
 
     // @ts-ignore
     private speed: number;
     // @ts-ignore
-    private sprite: Sprite;
+    public sprite: Sprite;
     // @ts-ignore
     //private delta: number;
 
     public player_text: BitmapText;
+
+    private position_x: number;
+    private position_y: number;
 
     private velocity_x: number;
     private velocity_y: number;
 
     public name: string;
 
+    // this would really be a pointer/reference to the app in index.ts
+    private app: Application;
+
     constructor(app: Application) {
+        this.app = app;
+
         this.name = "John";
 
-        this.speed = 10.0;
+        this.speed = 5.0;
 
-        this.sprite = Sprite.from("assets/knowledge_graph_logo.png");
+        this.sprite = Sprite.from("assets/Faceset.png");
         app.stage.addChild(this.sprite);
-        this.sprite.x = 200;
-        this.sprite.y = 200;
+        this.position_x = 200;
+        this.position_y = 200;
+
+        this.sprite.x = this.position_x;
+        this.sprite.y = this.position_y;
 
         this.velocity_x = 0;
         this.velocity_y = 0;
@@ -54,12 +65,36 @@ export class Player {
     public update(delta: number) {
         // There's probably a better way to do thi
         
-        this.sprite.x += this.velocity_x * delta;
-        this.sprite.y += this.velocity_y * delta;
+        
+        // set position to change in velocity or whatever
+        this.position_x += this.velocity_x * delta;
+        if(this.position_x > this.app.screen.width)
+        {
+            this.position_x = 0;
+        }
+        else if(this.position_x < 0){
+            this.position_x = this.app.screen.width;
+        }
+        this.position_y += this.velocity_y * delta;
+        if(this.position_y > this.app.screen.height)
+        {
+            this.position_y = 0;
+        }
+        else if(this.position_y < 0){
+            this.position_y = this.app.screen.height;
+        }
+
+        // after makign sure we got correct sprite, then set position of sprite to player position
+        this.sprite.x = this.position_x;
+        this.sprite.y = this.position_y;
+
+        this.player_text.text = "Current Position: " + this.position_x.toString() + ", " + this.position_y.toString();
+        this.player_text.text += "\n Current Sprite Position: " + this.sprite.x.toString() + ", " + this.sprite.y.toString();
+        //this.player_text.text += "\n Bounds: " + this.sprite.getBounds().left.toString();
     }
 
     private onKeyDown(e: KeyboardEvent): void {
-        this.player_text.text = "KeyDown event fired! " + e.code;
+        //this.player_text.text = "KeyDown event fired! " + e.code;
 
         // Most likely, you will switch on this:
         // e.code // if you care about the physical location of the key
@@ -94,5 +129,23 @@ export class Player {
         // e.code // if you care about the physical location of the key
         // e.key // if you care about the character that the key represents
     }
+
+    public checkCollision(objB: DisplayObject): boolean {
+        const a = this.sprite.getBounds();
+        const b = objB.getBounds();
+    
+        const rightmostLeft = a.left < b.left ? b.left : a.left;
+        const leftmostRight = a.right > b.right ? b.right : a.right;
+    
+        if (leftmostRight <= rightmostLeft) {
+            return false;
+        }
+    
+        const bottommostTop = a.top < b.top ? b.top : a.top;
+        const topmostBottom = a.bottom > b.bottom ? b.bottom : a.bottom;
+    
+        return topmostBottom > bottommostTop;
+    }
+    
 
 }
